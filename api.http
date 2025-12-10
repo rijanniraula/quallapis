@@ -2,15 +2,24 @@
 
 @token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS5xdWFsbGEuY28uaWwvYXV0aC9sb2dpbiIsImlhdCI6MTc2NTI2Mjc0NiwiZXhwIjoyNzExOTQ3NTQ2LCJuYmYiOjE3NjUyNjI3NDYsImp0aSI6InRyOXlyVVk2WXFGbFZYQ1MiLCJzdWIiOiIxMTA2OSIsInBydiI6IjdkYzNjYzgyMGU2YTMwMjhjY2RlOGNkMzljNTk3MWQxMTdhMGYxMTYiLCJ1c2VyIjp7ImlkIjoxMTA2OX19.95ypFfTHCo3Wa7mZvfbohooYInz9WoSf1DyyrxgEQ2I
 
+### Aws qualla api
 
-# Get car vehicle number details
+POST http://localhost:3001/api/bids/cars/vehicleNumberDetails
+Content-Type: application/json
+
+{
+  "carNumber": "1234567"
+}
+
+### Get car vehicle number details
+
 GET http://localhost:3001/api/car-details/1234567
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Get car vehicle number details
 
-GET https://api.qualla.co.il/bids/cars/12/results
+GET https://api.qualla.co.il/bids/cars/7f3a2b10/results
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -95,4 +104,71 @@ Content-Type: application/json
     "claimsLastThreeYears": 0
   }
 
+### Get bid results
 
+POST https://api.stg.qualla.co.il/bids/cars
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "zipCode": "4600740",
+    "driversNumber": 0,
+    "youngDriverGender": 1,
+    "searchModelDescriptionBy": "carNumber",
+    "selectedYear": "",
+    "selectedModel": "",
+    "selectedManufacture": "",
+    "description": "sdafsdf",
+    "vehicleModel": 737103,
+    "vehicleManufactureYear": 2015,
+    "vehicleNumber": 1234567,
+    "onRoadDate": "2015-01-01",
+    "gearType": 1,
+    "esp": 1,
+    "ldw": 0,
+    "fcw": 0,
+    "airBags": 7,
+    "isValidate": 1,
+    "requestedBranches": 4,
+    "insuranceStartDate": "2024-11-18",
+    "collective": null,
+    "subCollective": null,
+    "firstName": null,
+    "lastName": null,
+    "phone": null,
+    "email": null,
+    "city": 472,
+    "drivesOnSaturday": 1,
+    "isCompanyCar": 0,
+    "carOwnership": 1,
+    "poweredByGas": 0,
+    "automaticEstablishment": 0,
+    "newForOld": 0,
+    "accessoriesValue": 0,
+    "deductibleInCase": 1,
+    "kilometerPerYear": 15000,
+    "wasRefusedInThePast": 0,
+    "youngDriverBirthDate": "2000-11-18",
+    "youngDriverLicenseYears": 3,
+    "primaryDriverBirthDate": "2000-11-18",
+    "primaryDriverLicenseYears": 3,
+    "thirdDriverBirthDate": "2000-11-18",
+    "thirdDriverLicenseYears": 3,
+    "isMarried": 0,
+    "youngOrNewCarOwner": 0,
+    "suspensionsLastThreeYears": 0,
+    "bodyDamagesLastThreeYears": 0,
+    "yearAgo": 1,
+    "yearAgoClaims": 0,
+    "twoYearsAgo": 1,
+    "twoYearsAgoClaims": 0,
+    "threeYearsAgo": 1,
+    "threeYearsAgoClaims": 0,
+    "claimsLastYear": 0,
+    "claimsLastTwoYears": 0,
+    "claimsLastThreeYears": 0
+  }
+
+
+
+  

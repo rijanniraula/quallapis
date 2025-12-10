@@ -20,18 +20,18 @@ app.use(
 app.use(express.json());
 
 //get car details
-app.get("/api/car-details/:vehicleNumber", async (req, res) => {
-  const vehicleNumber = req.params.vehicleNumber;
+app.post("/api/bids/cars/vehicleNumberDetails", async (req, res) => {
+  const vehicleNumber = req.body.carNumber;
 
   try {
     const carDetails = await fetch(
-      `${process.env.BASE_API_URL}/bids/cars/vehicleNumberDetails/${vehicleNumber}`,
+      `${process.env.AWS_BASE_URL}/bids/cars/vehicleNumberDetails`,
       {
-        method: "GET",
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.TOKEN}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ carNumber: vehicleNumber }),
       }
     ).then((response) => response.json());
 
@@ -48,10 +48,9 @@ app.post("/api/get-bid-results", async (req, res) => {
   const carDetails = req.body;
 
   // try {
-  const response = await fetch(`${process.env.BASE_API_URL}/bids/cars`, {
+  const response = await fetch(`${process.env.AWS_BASE_URL}/bids/cars`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env.TOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(carDetails),
@@ -65,21 +64,21 @@ app.post("/api/get-bid-results", async (req, res) => {
 
   const responseData = await response.json();
   console.log({ responseData });
-  // const taskId =
-  //   responseData?.data?.taskId || "7f3a2b10-9c42-4e7c-8c6a-81e9b3f42d91";
-  const taskId = "7f3a2b10-9c42-4e7c-8c6a-81e9b3f42d91";
+  const jobId = responseData?.job_id;
 
-  const responseBidResults = await fetch(
-    `${process.env.BASE_API_URL}/bids/cars/${taskId}/results`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${process.env.TOKEN}`,
-      },
-    }
-  );
+  // wait before polling results
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  const responseBidResults = await fetch(`${process.env.AWS_BASE_URL}/jobs`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ job_id: jobId }),
+  });
 
   const resultsData = await responseBidResults.json();
+  console.log({ resultsDataResults: resultsData });
   res.status(200).json({ data: resultsData });
 
   // } catch (error) {
